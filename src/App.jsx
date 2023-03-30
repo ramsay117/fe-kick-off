@@ -1,9 +1,13 @@
 import ReactDOM from "react-dom/client";
+import Animals from "./components/Animals";
 
 function App() {
-  return <div>App</div>;
+  return (
+    <div>
+      <Animals animal="cat" />
+    </div>
+  );
 }
-export default App;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
