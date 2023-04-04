@@ -1,28 +1,15 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import getAnimalsClient from "./getAnimalsClient";
 
 function useAnimalList(animal) {
-  const [loading, setLoading] = useState(false);
-  const [animalList, setAnimalList] = useState([]);
+  const animalsQuery = useQuery({
+    queryKey: ["animals"],
+    queryFn: () => getAnimalsClient.get(`?animal=${animal}`),
+  });
 
-  useEffect(() => {
-    if (!animal) {
-      setAnimalList([]);
-    } else {
-      requestList();
-    }
-  }, [animal]);
+  const animalList = animalsQuery.data?.data?.pets ?? [];
 
-  async function requestList() {
-    setLoading(true);
-    setAnimalList([]);
-    const res = await fetch(
-      `${import.meta.env.VITE_ANIMAL_LIST_URL}?animal=${animal}`
-    );
-    const data = await res.json();
-    setLoading(false);
-    setAnimalList(data.pets);
-  }
-  return [animalList, loading];
+  return [animalList, animalsQuery.status == "loading"];
 }
 
 export default useAnimalList;
