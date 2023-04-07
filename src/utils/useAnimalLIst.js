@@ -3,7 +3,7 @@ import getAnimalsClient from "./getAnimalsClient";
 
 function useAnimalList(animal) {
   const animalsQuery = useQuery({
-    queryKey: ["animals"],
+    queryKey: [animal],
     queryFn: () => getAnimalsClient.get(`?animal=${animal}`),
   });
 
